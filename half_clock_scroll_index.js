@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Implement Draggable Interaction
     Draggable.create(pointer, {
         type: "rotation",
-        liveSnap: true,
         bounds: { minRotation: -90, maxRotation: 90 }, 
         onDrag: function() {
             const maxScroll = ScrollTrigger.maxScroll(window);
@@ -45,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const normalizedRotation = (90 - currentRotation) / 180; 
             const targetScroll = normalizedRotation * maxScroll;
             
-            // Scroll the window
+            // Scroll the window immediately without animation
             gsap.to(window, { 
                 scrollTo: targetScroll, 
-                duration: 0.1, 
-                ease: "power1.out" 
+                duration: 0, 
+                overwrite: 'auto'
             });
         },
         // Visual feedback
