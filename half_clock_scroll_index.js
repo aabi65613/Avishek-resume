@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 1. Map Scroll to Rotation
-    // Start: 90deg (top of the half-circle)
-    // End: 270deg (bottom of the half-circle, 180 degrees total)
+    // Start: 90deg (top of the half-circle, pointing up)
+    // End: -90deg (bottom of the half-circle, pointing down, 180 degrees total)
     gsap.to(pointer, {
-        rotation: 450, 
+        rotation: -90, 
         ease: "none",
         scrollTrigger: {
             trigger: "body",
@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     Draggable.create(pointer, {
         type: "rotation",
         liveSnap: true,
-        bounds: { minRotation: 270, maxRotation: 450 }, 
+        bounds: { minRotation: -90, maxRotation: 90 }, 
         onDrag: function() {
             const maxScroll = ScrollTrigger.maxScroll(window);
             const currentRotation = this.rotation; 
             
-            // Normalize rotation (90 to 270) to a 0-1 range
-            const normalizedRotation = (currentRotation - 270) / 180; 
+            // Normalize rotation (90 to -90) to a 0-1 range
+            const normalizedRotation = (90 - currentRotation) / 180; 
             const targetScroll = normalizedRotation * maxScroll;
             
             // Scroll the window
