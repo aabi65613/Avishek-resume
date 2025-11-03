@@ -198,8 +198,4 @@ body {
 }
 
 
-/* Clock container flush with left edge */
-#half-clock-container {
-    margin-left: 0;
-    margin-top: 0;
-}
+
