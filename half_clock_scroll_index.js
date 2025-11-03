@@ -61,5 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Register Draggable and ScrollTo plugins (assuming they are loaded via CDN in HTML)
-gsap.registerPlugin(ScrollTrigger, Draggable, ScrollToPlugin);
+// Register Draggable and ScrollTo plugins (must be done before use)
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Draggable !== 'undefined' && typeof ScrollToPlugin !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger, Draggable, ScrollToPlugin);
+} else {
+    console.error("GSAP plugins not loaded correctly.");
+}
