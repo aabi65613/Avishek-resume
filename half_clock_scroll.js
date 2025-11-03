@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start: 90deg (top of the half-circle)
     // End: 270deg (bottom of the half-circle, 180 degrees total)
     gsap.to(pointer, {
-        rotation: -90, 
+        rotation: 90, 
         ease: "none",
         scrollTrigger: {
             trigger: "body",
