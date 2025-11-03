@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Map Scroll to Rotation
     // Use GSAP ScrollTrigger to map the entire scrollable height of the body to a 180-degree rotation.
     // Start: 90deg (top of the half-circle)
-    // End: -90deg (bottom of the half-circle)
+    // End: 270deg (bottom of the half-circle, 180 degrees total)
     gsap.to(pointer, {
-        rotation: -90, // Target rotation in degrees
+        rotation: 270, // Target rotation in degrees (90 + 180 = 270)
         ease: "none",
         scrollTrigger: {
             trigger: "body",
@@ -31,16 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
     Draggable.create(pointer, {
         type: "rotation",
         liveSnap: true,
-        bounds: { minRotation: -90, maxRotation: 90 }, // Limit to 180 degrees
+        bounds: { minRotation: 90, maxRotation: 270 }, // Limit to 180 degrees (90 to 270)
         onDrag: function() {
             // Map the current rotation (90 to -90) to the scroll position (0 to maxScroll)
             const maxScroll = ScrollTrigger.maxScroll(window);
-            const currentRotation = this.rotation; // Ranges from 90 to -90
+            const currentRotation = this.rotation; // Ranges from 90 to 270
             
             // Normalize rotation to a 0-1 range
             // 90deg -> 0 (start of scroll)
-            // -90deg -> 1 (end of scroll)
-            const normalizedRotation = (90 - currentRotation) / 180; 
+            // 270deg -> 1 (end of scroll)
+            const normalizedRotation = (currentRotation - 90) / 180; 
             
             const targetScroll = normalizedRotation * maxScroll;
             

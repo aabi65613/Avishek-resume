@@ -29,28 +29,28 @@
 <body class="bg-grid bg-white dark:bg-gray-900 transition-colors duration-500">
     <custom-navbar></custom-navbar>
     
-    <main class="container mx-auto px-4 py-12 relative overflow-hidden flex">
+    <main class="container mx-auto px-4 py-12 relative overflow-hidden">
         <!-- Floating particles background -->
         <div id="particles" class="absolute inset-0 pointer-events-none"></div>
         
         <!-- Half-Clock Scroll Mechanism Container -->
-        <div id="half-clock-container" class="hidden lg:block fixed left-0 top-1/2 transform -translate-y-1/2 z-50">
+        <div id="half-clock-container" class="hidden lg:block fixed right-0 top-1/2 transform -translate-y-1/2 z-50">
             <div id="half-clock-dial" class="relative w-64 h-64">
                 <!-- Clock Face (Semi-Circle) -->
-                <div class="absolute inset-0 rounded-full border-4 border-indigo-600 dark:border-indigo-400 opacity-20" style="clip-path: inset(0 50% 0 0);"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-indigo-600 dark:border-indigo-400 opacity-20" style="clip-path: inset(0 0 0 50%);"></div>
                 
                 <!-- Pointer/Stick -->
-                <div id="half-clock-pointer" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-1 origin-left bg-indigo-600 dark:bg-indigo-400 rounded-full shadow-lg" style="transform-origin: 0% 50%; transform: rotate(90deg);">
-                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-indigo-600 dark:border-indigo-400"></div>
+                <div id="half-clock-pointer" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-1 origin-left bg-indigo-600 dark:bg-indigo-400 rounded-full shadow-lg" style="transform-origin: 100% 50%; transform: rotate(90deg);">
+                    <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-indigo-600 dark:border-indigo-400"></div>
                 </div>
                 
                 <!-- Center Pivot -->
-                <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-indigo-600 dark:bg-indigo-400 shadow-xl"></div>
+                <div class="absolute right-1/2 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-indigo-600 dark:bg-indigo-400 shadow-xl"></div>
             </div>
         </div>
 
         <!-- Hero Section -->
-        <section class="min-h-screen flex flex-col justify-center items-center text-center py-20 relative z-10 lg:ml-64">
+        <section class="min-h-screen flex flex-col justify-center items-center text-center py-20 relative z-10">
             <h1 class="text-6xl md:text-8xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 animate-float">
                 <span class="block opacity-0">Avishek Biswas</span>
             </h1>
@@ -64,7 +64,7 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 relative z-10 lg:ml-64">
+        <section id="about" class="py-20 relative z-10">
             <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-xl transform transition-transform duration-500 hover:scale-[1.01]">
                 <h2 class="text-3xl md:text-4xl font-bold mb-8 text-indigo-600 dark:text-indigo-400">About Me</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -99,7 +99,7 @@
         </section>
 
         <!-- Education Section -->
-        <section id="education" class="py-20 relative z-10 lg:ml-64">
+        <section id="education" class="py-20 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-indigo-600 dark:text-indigo-400">Education</h2>
                 <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl overflow-hidden">
@@ -131,7 +131,7 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20 relative z-10 lg:ml-64">
+        <section id="skills" class="py-20 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-indigo-600 dark:text-indigo-400">Technical Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -167,7 +167,7 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20 relative z-10 lg:ml-64">
+        <section id="projects" class="py-20 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-indigo-600 dark:text-indigo-400">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -198,7 +198,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 relative z-10 lg:ml-64">
+        <section id="contact" class="py-20 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-indigo-600 dark:text-indigo-400">Get In Touch</h2>
                 <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl">
