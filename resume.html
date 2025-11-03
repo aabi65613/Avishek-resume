@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avishek's Resume</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js" defer></script>
+    <script src="components/footer.js" defer></script>
+    <style>
+        /* Specific styles for the resume page */
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dark .resume-container {
+            background-color: #1f2937;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+        .resume-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .resume-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .dark .resume-header h1 {
+            color: #f3f4f6;
+        }
+        .resume-header p {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+        .section-title {
+            border-bottom: 2px solid #6366f1;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .dark .section-title {
+            border-bottom-color: #818cf8;
+            color: #f3f4f6;
+        }
+        .job-title, .project-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .company-name, .institution-name {
+            font-style: italic;
+            color: #6366f1;
+        }
+        .date-range {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .description-list {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            padding-left: 0;
+            margin-top: 0.5rem;
+        }
+        .description-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+    <custom-navbar></custom-navbar>
+
+    <main class="py-10">
+        <div class="resume-container">
+            
+            <header class="resume-header">
+                <h1>Avishek Shyamnagar</h1>
+                <p>Full-Stack Developer | AI Enthusiast</p>
+                <p class="text-sm mt-2">
+                    <a href="mailto:avishek@example.com" class="text-indigo-600 dark:text-indigo-400 hover:underline">avishek@example.com</a> | 
+                    <a href="tel:+919876543210" class="text-indigo-600 dark:text-indigo-400 hover:underline">+91 98765 43210</a> | 
+                    <a href="https://linkedin.com/in/avishek" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">LinkedIn</a> | 
+                    <a href="https://github.com/avishek" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">GitHub</a>
+                </p>
+            </header>
+
+            <!-- Summary -->
+            <section class="mb-8">
+                <h2 class="section-title">Professional Summary</h2>
+                <p class="text-lg text-gray-700 dark:text-gray-300">
+                    Highly motivated and results-oriented Full-Stack Developer with X years of experience in designing, developing, and deploying robust web applications. Proficient in the MERN stack, with a keen interest in integrating AI/ML technologies to enhance product functionality. Seeking to leverage technical skills and creative problem-solving abilities in a challenging and innovative environment.
+                </p>
+            </section>
+
+            <!-- Experience -->
+            <section class="mb-8">
+                <h2 class="section-title">Experience</h2>
+                <div class="mb-6">
+                    <h3 class="job-title">Senior Full-Stack Developer</h3>
+                    <p class="company-name">Tech Innovators Inc.</p>
+                    <p class="date-range">Jan 2022 - Present</p>
+                    <ul class="description-list">
+                        <li>Led the development of a high-traffic e-commerce platform using Next.js and Node.js, resulting in a 30% increase in page load speed.</li>
+                        <li>Designed and implemented RESTful APIs for seamless communication between frontend and backend services.</li>
+                        <li>Mentored junior developers on best practices for clean code, testing, and deployment workflows.</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="job-title">Junior Web Developer</h3>
+                    <p class="company-name">Digital Solutions Co.</p>
+                    <p class="date-range">Aug 2020 - Dec 2021</p>
+                    <ul class="description-list">
+                        <li>Developed and maintained client websites using HTML, CSS, and vanilla JavaScript.</li>
+                        <li>Assisted in migrating legacy systems to a modern React-based architecture.</li>
+                        <li>Collaborated with the design team to ensure technical feasibility of UI/UX designs.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section class="mb-8">
+                <h2 class="section-title">Key Projects</h2>
+                <div class="mb-6">
+                    <h3 class="project-title">QuantumFolio (Personal Portfolio)</h3>
+                    <p class="date-range">Self-Directed | 2024</p>
+                    <ul class="description-list">
+                        <li>A modern, responsive portfolio website built with custom Web Components (Navbar, Footer) and Tailwind CSS for a dark/light theme.</li>
+                        <li>Features smooth animations and a clean, professional design to showcase skills and projects.</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="project-title">AI-Powered Chatbot</h3>
+                    <p class="date-range">Hackathon Entry | 2023</p>
+                    <ul class="description-list">
+                        <li>Developed a real-time customer support chatbot integrated with a custom-trained LLM model.</li>
+                        <li>Achieved a 90% resolution rate for common customer queries.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section class="mb-8">
+                <h2 class="section-title">Education</h2>
+                <div class="mb-6">
+                    <h3 class="job-title">Bachelor of Technology in Computer Science</h3>
+                    <p class="institution-name">University of Technology, Kolkata</p>
+                    <p class="date-range">2016 - 2020</p>
+                    <p class="text-gray-700 dark:text-gray-300">Graduated with First Class Honors.</p>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="mb-8">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
+                    <div><strong>Languages:</strong> JavaScript (ES6+), Python, HTML5, CSS3</div>
+                    <div><strong>Frontend:</strong> React, Next.js, Tailwind CSS, Web Components</div>
+                    <div><strong>Backend:</strong> Node.js, Express.js, REST APIs</div>
+                    <div><strong>Databases:</strong> MongoDB, PostgreSQL, MySQL</div>
+                    <div><strong>Tools & DevOps:</strong> Git, GitHub, Docker, AWS (S3, EC2)</div>
+                    <div><strong>AI/ML:</strong> TensorFlow, PyTorch, Natural Language Processing (NLP)</div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+
+        // Theme initialization
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
