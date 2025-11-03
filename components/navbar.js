@@ -80,7 +80,7 @@ class CustomNavbar extends HTMLElement {
         }
       </style>
       <nav>
-        <a href="/" class="logo">QuantumFolio</a>
+        <a href="/" class="logo">Avishek Biswas</a>
 <div class="nav-links">
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
