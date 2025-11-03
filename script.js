@@ -63,4 +63,54 @@ document.addEventListener('DOMContentLoaded', () => {
             // In a real application, you would send data to a backend service here.
         });
     }
+
+    // 7. Scroll-controlled 3D Pop-out Animation for About Section
+    const aboutSection = document.querySelector('#about');
+    const aboutLines = document.querySelectorAll('.about-line');
+    let lastScrollVelocity = 0;
+    let lastScrollTime = 0;
+    let lastScrollY = 0;
+
+    if (aboutSection && aboutLines.length > 0) {
+        // Intersection Observer to trigger animation when section comes into view
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px'
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Start animation when section is visible
+                    aboutLines.forEach((line, index) => {
+                        setTimeout(() => {
+                            line.classList.add('animate-pop');
+                        }, index * 150); // Stagger by 150ms
+                    });
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sectionObserver.observe(aboutSection);
+
+        // Scroll velocity tracking to adjust animation speed
+        window.addEventListener('scroll', () => {
+            const currentTime = Date.now();
+            const currentScrollY = window.scrollY;
+            const timeDelta = currentTime - lastScrollTime;
+            const scrollDelta = currentScrollY - lastScrollY;
+
+            if (timeDelta > 0) {
+                lastScrollVelocity = Math.abs(scrollDelta / timeDelta);
+            }
+
+            // Adjust animation speed based on scroll velocity
+            const scrollSpeed = Math.max(0.5, Math.min(2, 1 + (lastScrollVelocity / 500)));
+            aboutSection.style.setProperty('--scroll-speed', scrollSpeed);
+
+            lastScrollTime = currentTime;
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    }
 });
