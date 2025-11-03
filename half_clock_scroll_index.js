@@ -1,57 +1,58 @@
-// half_clock_scroll_index.js - Logic is identical to resume.html
+// half_clock_scroll_index.js - Robust and simplified logic
 
 document.addEventListener('DOMContentLoaded', () => {
-    const clockContainer = document.getElementById('half-clock-container');
-    const clockDial = document.getElementById('half-clock-dial');
-    const pointer = document.getElementById('half-clock-pointer');
-    const mainContent = document.querySelector('main');
+    // Ensure GSAP plugins are registered (loaded via CDN in HTML)
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || typeof Draggable === 'undefined' || typeof ScrollToPlugin === 'undefined') {
+        console.error("GSAP or its required plugins are not loaded. Skipping custom scroll logic.");
+        return;
+    }
+    
+    // Register plugins only if not already registered (safer check)
+    if (!gsap.isTweening(window)) {
+        gsap.registerPlugin(ScrollTrigger, Draggable, ScrollToPlugin);
+    }
 
-    if (!clockContainer || !pointer || !mainContent) {
-        console.error("Half-Clock components not found. Skipping custom scroll logic.");
+    const pointer = document.getElementById('half-clock-pointer');
+
+    if (!pointer) {
         return;
     }
 
     // 1. Map Scroll to Rotation
-    // Use GSAP ScrollTrigger to map the entire scrollable height of the body to a 180-degree rotation.
     // Start: 90deg (top of the half-circle)
     // End: 270deg (bottom of the half-circle, 180 degrees total)
     gsap.to(pointer, {
-        rotation: 270, // Target rotation in degrees (90 + 180 = 270)
+        rotation: 270, 
         ease: "none",
         scrollTrigger: {
             trigger: "body",
             start: "top top",
             end: "bottom bottom",
-            scrub: true, // Link the animation to the scroll position
+            scrub: true, 
         },
     });
 
-    // 2. Implement Draggable Interaction (for the "circular motion with my finger" request)
-    // This allows the user to drag the pointer to control the scroll position.
+    // 2. Implement Draggable Interaction
     Draggable.create(pointer, {
         type: "rotation",
         liveSnap: true,
-        bounds: { minRotation: 90, maxRotation: 270 }, // Limit to 180 degrees (90 to 270)
+        bounds: { minRotation: 90, maxRotation: 270 }, 
         onDrag: function() {
-            // Map the current rotation (90 to -90) to the scroll position (0 to maxScroll)
             const maxScroll = ScrollTrigger.maxScroll(window);
-            const currentRotation = this.rotation; // Ranges from 90 to 270
+            const currentRotation = this.rotation; 
             
-            // Normalize rotation to a 0-1 range
-            // 90deg -> 0 (start of scroll)
-            // 270deg -> 1 (end of scroll)
+            // Normalize rotation (90 to 270) to a 0-1 range
             const normalizedRotation = (currentRotation - 90) / 180; 
-            
             const targetScroll = normalizedRotation * maxScroll;
             
-            // Scroll the window to the target position
+            // Scroll the window
             gsap.to(window, { 
                 scrollTo: targetScroll, 
                 duration: 0.1, 
                 ease: "power1.out" 
             });
         },
-        // Optional: Add visual feedback on drag
+        // Visual feedback
         onPress: function() {
             gsap.to(pointer, { scale: 1.1, duration: 0.1 });
         },
@@ -60,10 +61,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-// Register Draggable and ScrollTo plugins (must be done before use)
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Draggable !== 'undefined' && typeof ScrollToPlugin !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger, Draggable, ScrollToPlugin);
-} else {
-    console.error("GSAP plugins not loaded correctly.");
-}
