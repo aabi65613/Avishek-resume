@@ -1,0 +1,30 @@
+{
+  "name": "avishek-portfolio",
+  "version": "1.0.0",
+  "description": "Avishek Biswas - Modern Portfolio with Framer Motion Animations",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "^15.0.0",
+    "framer-motion": "^12.0.0",
+    "lucide-react": "^0.453.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^15.0.0"
+  }
+}
