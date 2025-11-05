@@ -1,205 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* ===== General Page Transitions ===== */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    transition: background-color 0.5s ease, color 0.5s ease;
-    overflow-x: hidden;
-}
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
+  font-family: 'Poppins', sans-serif;
+  color: #111;
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
+/* ===== Custom Glow Background ===== */
+.bg-grid::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center,
+    rgba(99,102,241,0.15) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+/* ===== Navbar & Footer Shadows ===== */
+custom-navbar, custom-footer {
+  z-index: 50;
+  backdrop-filter: blur(12px);
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+/* ===== Card Depth / Hover Pop ===== */
+.bg-white, .dark\:bg-gray-800 {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dark ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-.dark .bg-grid {
-    animation: gridMove 60s linear infinite;
+.bg-white:hover, .dark\:bg-gray-800:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(99,102,241,0.2);
 }
 
-@keyframes gridMove {
-    0% { background-position: 0 0; }
-    100% { background-position: 1000px 1000px; }
-}
-/* Animation classes */
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
-
+/* ===== Floating Animation (Hero Name) ===== */
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-.fade-in {
-    animation: fadeIn 1s ease-in-out forwards;
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* ===== Contact Form Styling ===== */
+form input, form textarea {
+  border-color: rgba(99,102,241,0.4);
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-.slide-up {
-    animation: slideUp 1s ease-out forwards;
+form input:focus, form textarea:focus {
+  border-color: rgba(99,102,241,0.8);
+  box-shadow: 0 0 8px rgba(99,102,241,0.3);
 }
 
-@keyframes slideUp {
-    from { 
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to { 
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ===== Neon 3-D Effect for About Info (extra layer) ===== */
+#about li {
+  color: #e0d7ff;
+  font-weight: 500;
+  text-shadow:
+    0 0 2px #8b5cf6,
+    0 0 6px #8b5cf6,
+    0 0 12px #8b5cf6,
+    0 0 20px rgba(139,92,246,0.6);
+  transition: all 0.5s ease;
 }
 
-/* Parallax effect */
-[data-parallax] {
-    will-change: transform;
+/* Subtle hover pulse on each info item */
+#about li:hover {
+  transform: scale(1.05);
+  text-shadow:
+    0 0 4px #8b5cf6,
+    0 0 10px #a78bfa,
+    0 0 20px rgba(139,92,246,0.8);
 }
 
-/* Gradient text */
-.gradient-text {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* ===== Neon Glow Pulse Animation ===== */
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 3px #8b5cf6,
+      0 0 6px #8b5cf6,
+      0 0 10px rgba(139,92,246,0.8);
+  }
+  50% {
+    text-shadow:
+      0 0 6px #a78bfa,
+      0 0 12px #a78bfa,
+      0 0 20px rgba(167,139,250,0.9);
+  }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 10px;
+#about li {
+  animation: pulseGlow 3s infinite ease-in-out;
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #6366f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #4f46e5;
-}
-
-.dark ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-    background: #818cf8;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-    background: #6b72e0;
-}
-
-/* Pulse animation */
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-/* Shine effect */
-.shine {
-    position: relative;
-    overflow: hidden;
-}
-
-.shine::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    opacity: 0;
-    transform: rotate(30deg);
-    background: rgba(255, 255, 255, 0.13);
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.13) 0%,
-        rgba(255, 255, 255, 0.13) 77%,
-        rgba(255, 255, 255, 0.5) 92%,
-        rgba(255, 255, 255, 0.0) 100%
-    );
-}
-
-.shine:hover::after {
-    opacity: 1;
-    left: 130%;
-    transition-property: left, top, opacity;
-    transition-duration: 0.7s, 0.7s, 0.15s;
-    transition-timing-function: ease;
-}
-
-
-/* Additional Modern Animations */
-.group:hover .group-hover\:scale-110 {
-    transform: scale(1.1);
-}
-
-.group:hover .group-hover\:text-indigo-400 {
-    color: #818cf8;
-}
-
-/* Enhanced button styles */
-.btn-shine {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-shine::after {
-    content: 
-    '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    opacity: 0;
-    transform: rotate(30deg);
-    background: rgba(255, 255, 255, 0.13);
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.13) 0%,
-        rgba(255, 255, 255, 0.13) 77%,
-        rgba(255, 255, 255, 0.5) 92%,
-        rgba(255, 255, 255, 0.0) 100%
-    );
-}
-
-.btn-shine:hover::after {
-    opacity: 1;
-    left: 130%;
-    transition-property: left, top, opacity;
-    transition-duration: 0.7s, 0.7s, 0.15s;
-    transition-timing-function: ease;
-}
-
-
-/* Clock container flush with left edge */
-#half-clock-container {
-    margin-left: 0;
-    margin-top: 0;
+/* ===== For Small Screens ===== */
+@media (max-width: 768px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 1.25rem; }
+  .p-8 { padding: 1.25rem; }
 }
