@@ -14,13 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pointer = document.getElementById('half-clock-pointer');
 
-    if (!pointer) {
-        return;
-    }
+    if (!pointer) return;
 
-    // 1. Map Scroll to Rotation
-    // Start: 90deg (top of the half-circle)
-    // End: 270deg (bottom of the half-circle, 180 degrees total)
+    // 1. Map Scroll to Rotation (stick moves when scrolling)
     gsap.to(pointer, {
         rotation: 90, 
         ease: "none",
@@ -32,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-    // 2. Implement Draggable Interaction
+    // 2. Drag the pointer to scroll page and rotate neon dial
     Draggable.create(pointer, {
         type: "rotation",
         liveSnap: true,
@@ -40,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         onDrag: function() {
             const maxScroll = ScrollTrigger.maxScroll(window);
             const currentRotation = this.rotation; 
+            
+            // ✅ Rotate neon dial background
+            if (window.updateDialRotation) window.updateDialRotation(currentRotation);
             
             // Normalize rotation (-90 to 90) to a 0-1 range
             const normalizedRotation = (currentRotation + 90) / 180; 
@@ -52,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power1.out" 
             });
         },
-        // Visual feedback
         onPress: function() {
             gsap.to(pointer, { scale: 1.1, duration: 0.1 });
         },
