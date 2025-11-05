@@ -407,79 +407,87 @@ document.addEventListener("DOMContentLoaded",()=>{
 </script>
 
 <!-- ✨ Smooth 3D Neon Scroll Animation for About Info -->
+<!-- ✨ Smooth 3D Neon Scroll Animation (Instant Load Fix) -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const glowColor = "#8b5cf6";
-  const glowSoft = "rgba(139,92,246,0.4)";
-  const lightColor = "#e6deff";
-  const shadowColor = "rgba(20,0,40,0.9)";
-
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.utils.toArray("#about li").forEach((item, i) => {
-    item.style.color = lightColor;
-    item.style.fontWeight = "600";
-    item.style.textShadow = `
-      1px 1px 1px ${shadowColor},
-      2px 2px 2px ${shadowColor},
-      0 0 8px ${glowColor},
-      0 0 15px ${glowSoft}
-    `;
-    item.style.transition = "all 0.3s ease";
+  const glowColor = "#8b5cf6";
+  const glowSoft = "rgba(139,92,246,0.3)";
+  const textLight = "#ebe7ff";
+  const textShadow = "rgba(20,0,40,0.8)";
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: item,
-        start: "top 90%",
-        end: "top 60%",
-        scrub: true,
-      }
-    });
+  const animateAboutInfo = () => {
+    gsap.utils.toArray("#about li").forEach((item, i) => {
+      // Base style
+      item.style.color = textLight;
+      item.style.fontWeight = "600";
+      item.style.textShadow = `
+        1px 1px 1px ${textShadow},
+        0 0 6px ${glowSoft},
+        0 0 10px ${glowColor}
+      `;
+      item.style.transition = "all 0.4s ease";
 
-    tl.fromTo(item,
-      {
-        opacity: 0,
-        y: 50,
-        scale: 0.9,
-        filter: "brightness(0.4) blur(3px)",
-        textShadow: `0 0 0px ${glowSoft}`,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1.05,
-        duration: 1.2,
-        ease: "power2.out",
-        filter: "brightness(1.3)",
+      // Sequential 3D neon effect
+      gsap.fromTo(
+        item,
+        {
+          opacity: 0,
+          y: 40,
+          scale: 0.95,
+          filter: "brightness(0.6) blur(2px)",
+          textShadow: `0 0 0px ${glowSoft}`,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1.05,
+          filter: "brightness(1.3)",
+          textShadow: `
+            0 0 10px ${glowColor},
+            0 0 25px ${glowSoft},
+            0 0 40px ${glowSoft}
+          `,
+          duration: 1,
+          ease: "power2.out",
+          delay: i * 0.25,
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 80%",
+            end: "top 40%",
+            scrub: true,
+          },
+        }
+      );
+
+      // Fade-out while scrolling past
+      gsap.to(item, {
+        opacity: 0.8,
+        scale: 1,
+        filter: "brightness(1)",
         textShadow: `
-          0 0 6px ${glowColor},
-          0 0 15px ${glowColor},
-          0 0 30px ${glowSoft}
+          1px 1px 1px ${textShadow},
+          0 0 6px ${glowSoft}
         `,
-        delay: i * 0.1,
-      }
-    );
-
-    gsap.to(item, {
-      scrollTrigger: {
-        trigger: item,
-        start: "top 50%",
-        end: "top 10%",
-        scrub: true,
-      },
-      opacity: 0.85,
-      scale: 1,
-      filter: "brightness(1)",
-      textShadow: `
-        1px 1px 1px ${shadowColor},
-        0 0 6px ${glowSoft}
-      `,
-      duration: 1.5,
-      ease: "sine.inOut",
+        scrollTrigger: {
+          trigger: "#about",
+          start: "top 40%",
+          end: "top 10%",
+          scrub: true,
+        },
+      });
     });
+  };
+
+  // ✅ Run animation setup
+  animateAboutInfo();
+
+  // ✅ Fix: refresh triggers after everything is fully loaded (so it works instantly)
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 300);
   });
 });
 </script>
-
-</body>
-</html>
