@@ -1,138 +1,94 @@
-'use client'
+"use client";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-import { motion } from 'framer-motion'
+const textVariant = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
-export function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 }
   }
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  }
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        type: 'spring' as const,
-        stiffness: 100,
-      },
-    },
-  }
+export default function Hero() {
+  const [offsetY, setOffsetY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => setOffsetY(window.scrollY * 0.2);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
-      {/* Background gradient animation */}
+    <section className="relative h-[90vh] w-full flex items-center overflow-hidden select-none">
+      {/* Background gradient glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 via-purple-500/30 to-transparent blur-3xl opacity-50 -z-10" />
+
+      {/* Floating shapes */}
       <motion.div
-        className="absolute inset-0 -z-10"
-        animate={{
-          background: [
-            'radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
-            'radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)',
-            'radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
-          ],
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
+        animate={{ y: [0, -20, 0] }}
+        transition={{ repeat: Infinity, duration: 6 }}
+        className="absolute top-24 right-16 w-32 h-32 bg-purple-400/20 rounded-full blur-2xl"
+      />
+      <motion.div
+        animate={{ y: [0, 25, 0] }}
+        transition={{ repeat: Infinity, duration: 7 }}
+        className="absolute bottom-16 left-20 w-28 h-28 bg-indigo-400/20 rounded-full blur-2xl"
       />
 
+      {/* Content */}
       <motion.div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        variants={containerVariants}
+        variants={container}
         initial="hidden"
-        animate="visible"
+        animate="show"
+        style={{ transform: `translateY(${offsetY * 0.3}px)` }}
+        className="px-6 lg:px-24 max-w-3xl"
       >
-        {/* Profile Image */}
-        <motion.div
-          variants={imageVariants}
-          className="mb-8"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: 'spring' as const, stiffness: 300, damping: 10 }}
+        <motion.h1
+          variants={textVariant}
+          className="text-5xl md:text-6xl font-bold text-white leading-tight"
         >
-          <div className="w-32 h-32 rounded-full mx-auto shadow-2xl ring-4 ring-indigo-500/50 overflow-hidden bg-gray-200">
-            <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center text-white text-4xl font-bold">
-              AB
-            </div>
-          </div>
-        </motion.div>
+          Hi, I'm <span className="text-purple-400">Avishek</span>
+        </motion.h1>
 
-        {/* Main Heading */}
-        <motion.div variants={itemVariants}>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
-            Hi, I'm{' '}
-            <span className="gradient-text">Avishek</span>
-          </h1>
-        </motion.div>
-
-        {/* Subtitle */}
         <motion.p
-          variants={itemVariants}
-          className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8"
+          variants={textVariant}
+          className="mt-4 text-lg md:text-xl text-gray-200/90"
         >
-          Full-Stack Developer | AI Enthusiast | Open Source Contributor
+          Future AI & Web Engineer, Cloud Learner, and Creative Tech Explorer.
         </motion.p>
 
-        {/* CTA Buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row justify-center gap-4"
+        <motion.p
+          variants={textVariant}
+          className="mt-2 text-base md:text-lg text-gray-300/80"
         >
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full transition-colors"
-          >
-            Get In Touch
-          </motion.a>
-          <motion.a
-            href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400 font-semibold rounded-full hover:bg-indigo-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            View My Work
-          </motion.a>
-        </motion.div>
+          Crafting modern web experiences and smarter technology. Building my world with code.
+        </motion.p>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          variants={itemVariants}
-          className="mt-16"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="flex justify-center">
-            <div className="w-6 h-10 border-2 border-indigo-600 rounded-full flex items-start justify-center p-2">
-              <motion.div
-                className="w-1 h-2 bg-indigo-600 rounded-full"
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-          </div>
+        <motion.div variants={textVariant} className="mt-8 flex gap-4">
+          <motion.a
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            href="#projects"
+            className="bg-purple-600 hover:bg-purple-500 px-6 py-3 rounded-xl text-white font-semibold shadow-xl shadow-purple-500/20"
+          >
+            View Projects
+          </motion.a>
+
+          <motion.a
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            href="#contact"
+            className="border border-purple-500/50 px-6 py-3 rounded-xl text-white font-semibold backdrop-blur-sm"
+          >
+            Contact Me
+          </motion.a>
         </motion.div>
       </motion.div>
     </section>
-  )
+  );
 }
