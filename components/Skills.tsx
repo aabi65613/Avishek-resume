@@ -1,112 +1,75 @@
-'use client'
+"use client";
+import { motion } from "framer-motion";
 
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { Code, Server, Figma, Terminal } from 'lucide-react'
+const skills = [
+  "HTML", "CSS", "JavaScript",
+  "React & Next.js",
+  "Tailwind CSS",
+  "Python",
+  "Git & GitHub",
+  "Cloud Basics (AWS)",
+  "Framer Motion",
+];
 
-export function Skills() {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  })
-
-  const skills = [
-    {
-      icon: Code,
-      title: 'Programming',
-      description: 'HTML, CSS, JavaScript, Python (Flask)',
-      color: 'text-indigo-500',
-    },
-    {
-      icon: Server,
-      title: 'Cloud',
-      description: 'AWS (Learning phase)',
-      color: 'text-green-500',
-    },
-    {
-      icon: Figma,
-      title: 'Tools',
-      description: 'VS Code, GitHub, Figma, Canva',
-      color: 'text-red-500',
-    },
-    {
-      icon: Terminal,
-      title: 'OS',
-      description: 'Windows, Linux (basic)',
-      color: 'text-yellow-500',
-    },
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
   }
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        type: 'spring' as const,
-        stiffness: 100,
-      },
-    },
-  }
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
+export default function Skills() {
   return (
-    <section id="skills" ref={ref} className="py-20 md:py-32 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="relative py-28 px-6">
+      {/* neon glow backdrop */}
+      <div className="absolute inset-0 bg-gradient-to-bl from-purple-500/15 via-indigo-500/15 to-transparent blur-2xl -z-10" />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-6xl mx-auto text-center"
+      >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text"
+          variants={item}
+          className="text-4xl md:text-5xl font-bold text-white mb-12"
         >
-          Skills & Expertise
+          Skills & Tech Stack
         </motion.h2>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {skills.map((skill, idx) => (
+            <motion.div
+              key={idx}
+              variants={item}
+              whileHover={{
+                scale: 1.08,
+                boxShadow:
+                  "0 10px 35px rgba(140, 90, 255, 0.25), 0 8px 20px rgba(0,0,0,0.35)",
+                borderColor: "rgba(168, 85, 247, 0.6)"
+              }}
+              transition={{ duration: 0.25 }}
+              className="px-6 py-4 rounded-xl bg-white/5 backdrop-blur-lg border border-white/10 text-white font-medium"
+            >
+              {skill}
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p
+          variants={item}
+          className="mt-10 text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed"
         >
-          {skills.map((skill, index) => {
-            const Icon = skill.icon
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{
-                  y: -10,
-                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-                }}
-                className="p-6 border border-gray-200 dark:border-gray-700 rounded-xl text-center hover:border-indigo-500 transition-colors duration-300 cursor-pointer group"
-              >
-                <motion.div
-                  className={`w-12 h-12 mx-auto mb-4 ${skill.color}`}
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  transition={{ type: 'spring' as const, stiffness: 200 }}
-                >
-                  <Icon className="w-full h-full" />
-                </motion.div>
-                <h3 className="font-semibold text-xl mb-2">{skill.title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {skill.description}
-                </p>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-      </div>
+          Constantly learning and improving to build smarter, faster & modern web experiences.
+        </motion.p>
+      </motion.div>
     </section>
-  )
+  );
 }
