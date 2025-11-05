@@ -13,13 +13,13 @@ import LenisScroll from "@/components/LenisScroll";
 export default function Page() {
   return (
     <>
-      {/* Smooth scroll wrapper */}
+      {/* Smooth scrolling */}
       <LenisScroll />
 
       {/* Navbar */}
       <Navbar />
 
-      {/* Page fade-in animation */}
+      {/* Page transition wrapper */}
       <motion.main
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -33,3 +33,23 @@ export default function Page() {
 
         <section id="about">
           <About />
+        </section>
+
+        <section id="skills">
+          <Skills />
+        </section>
+
+        <section id="projects">
+          <Projects />
+        </section>
+
+        <section id="contact">
+          <Contact />
+        </section>
+
+        {/* Footer */}
+        <Footer />
+      </motion.main>
+    </>
+  );
+}
