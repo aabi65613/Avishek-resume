@@ -1,23 +1,23 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { LenisScroll } from '@/components/LenisScroll'
+import "./globals.css";
+import Particles from "@/components/Particles";
 
-export const metadata: Metadata = {
-  title: 'Avishek Biswas - Portfolio',
-  description: 'Full-Stack Developer | AI Enthusiast | Open Source Contributor',
-}
+export const metadata = {
+  title: "Avishek Portfolio",
+  description: "Modern AI & Web Developer Portfolio",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <LenisScroll />
-        {children}
+      <body className="relative overflow-x-hidden">
+        {/* Particles Background */}
+        <Particles />
+
+        {/* Main Content */}
+        <div className="relative z-[2]">
+          {children}
+        </div>
       </body>
     </html>
-  )
+  );
 }
