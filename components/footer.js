@@ -11,7 +11,7 @@ class CustomFooter extends HTMLElement {
           text-align: center;
           color: #6b7280;
           font-size: 0.875rem;
-        }
+        } 
         .dark :host {
           border-top-color: #374151;
           color: #9ca3af;
