@@ -1,29 +1,26 @@
-'use client'
+"use client";
+import Lenis from "@studio-freight/lenis";
+import { useEffect } from "react";
 
-import { useEffect } from 'react'
-import Lenis from '@studio-freight/lenis'
-
-export function LenisScroll() {
+export default function LenisScroll() {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      smooth: true,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+    });
 
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
 
-
-    })
-
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
+    requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy()
-    }
-  }, [])
+      lenis.destroy();
+    };
+  }, []);
 
-  return null
+  return null;
 }
