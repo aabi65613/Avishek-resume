@@ -1,138 +1,96 @@
-'use client'
+"use client";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { useState } from 'react'
-
-export function Contact() {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  })
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  })
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 }
   }
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        type: 'spring' as const,
-        stiffness: 100,
-      },
-    },
-  }
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-    setFormData({ name: '', email: '', message: '' })
-  }
+export default function Contact() {
+  const [sent, setSent] = useState(false);
 
   return (
-    <section id="contact" ref={ref} className="py-20 md:py-32 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text"
-        >
-          Get In Touch
+    <section id="contact" className="relative py-28 px-6">
+      {/* glow background */}
+      <div className="absolute inset-0 bg-gradient-to-tl from-indigo-500/20 via-purple-600/20 to-transparent blur-2xl -z-10" />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-xl mx-auto text-center"
+      >
+        <motion.h2 variants={item} className="text-4xl md:text-5xl font-bold text-white mb-8">
+          Contact Me
         </motion.h2>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="max-w-xl mx-auto"
+        <motion.p variants={item} className="text-gray-300 mb-10 text-lg">
+          I would love to connect! Let’s talk about tech, AI, creativity, or your next idea.
+        </motion.p>
+
+        <motion.form
+          variants={container}
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSent(true);
+          }}
+          className="space-y-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
         >
+          <motion.input
+            variants={item}
+            type="text"
+            required
+            placeholder="Your Name"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:border-purple-400 outline-none"
+          />
+
+          <motion.input
+            variants={item}
+            type="email"
+            required
+            placeholder="Your Email"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:border-purple-400 outline-none"
+          />
+
+          <motion.textarea
+            variants={item}
+            required
+            placeholder="Your Message"
+            rows={4}
+            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:border-purple-400 outline-none"
+          />
+
+          <motion.button
+            variants={item}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.93 }}
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-500 text-white font-semibold py-3 rounded-lg shadow-lg shadow-purple-500/20"
+          >
+            Send Message
+          </motion.button>
+        </motion.form>
+
+        {sent && (
           <motion.p
-            variants={itemVariants}
-            className="text-center text-lg text-gray-700 dark:text-gray-300 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-green-400 font-medium mt-5"
           >
-            I'm currently open to new opportunities. Feel free to reach out!
+            ✅ Message sent! I will get back soon.
           </motion.p>
-
-          <motion.form
-            variants={containerVariants}
-            onSubmit={handleSubmit}
-            className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-lg space-y-4"
-          >
-            <motion.div variants={itemVariants}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
-              />
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all"
-              >
-                Send Message
-              </button>
-            </motion.div>
-          </motion.form>
-        </motion.div>
-      </div>
+        )}
+      </motion.div>
     </section>
-  )
+  );
 }
