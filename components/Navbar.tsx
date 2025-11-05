@@ -16,10 +16,9 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Auto hide navbar on scroll down
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() || 0;
-    if (latest > previous && latest > 70) setHidden(true);
+    const prev = scrollY.getPrevious() || 0;
+    if (latest > prev && latest > 70) setHidden(true);
     else setHidden(false);
   });
 
@@ -29,6 +28,7 @@ export default function Navbar() {
       animate={{ y: hidden ? -90 : 0, opacity: 1 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-white/10"
+      aria-label="Primary"
     >
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
@@ -36,31 +36,33 @@ export default function Navbar() {
           href="#hero"
           whileHover={{ scale: 1.06 }}
           className="text-2xl font-bold text-white"
+          aria-label="Go to home"
         >
           Avishek
         </motion.a>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item, i) => (
+          {navItems.map((item) => (
             <motion.a
               key={item.href}
               href={item.href}
               whileHover={{ scale: 1.08 }}
-              className="relative text-gray-300 hover:text-white transition font-medium"
+              className="group relative text-gray-300 hover:text-white transition font-medium"
             >
               {item.label}
-              <span className="absolute left-0 bottom-[-2px] h-[2px] w-0 bg-purple-400 transition-all duration-300 group-hover:w-full" />
+              <span className="pointer-events-none absolute left-0 -bottom-0.5 h-[2px] w-0 bg-purple-400 transition-all duration-300 group-hover:w-full" />
             </motion.a>
           ))}
         </div>
 
         {/* Mobile Menu Button */}
         <motion.button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen((s) => !s)}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           className="md:hidden text-white p-2"
+          aria-label="Toggle menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </motion.button>
