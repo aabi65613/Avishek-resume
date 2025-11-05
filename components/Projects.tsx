@@ -1,129 +1,106 @@
-'use client'
+"use client";
+import { motion } from "framer-motion";
 
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { ArrowRight } from 'lucide-react'
-
-export function Projects() {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.3,
-  })
-
-  const projects = [
-    {
-      title: 'EviWare',
-      description:
-        'Personal website hosted on Vercel (Front-end completed, backend under development). This project serves as my digital portfolio.',
-      tags: ['React', 'Vercel', 'Web Design'],
-    },
-    {
-      title: 'Local E-Commerce System',
-      description:
-        'Custom-built website for local shop orders and deliveries, providing a streamlined e-commerce solution for small businesses.',
-      tags: ['E-Commerce', 'Web Development', 'Business'],
-    },
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
+const projects = [
+  {
+    title: "AI Chat Automation",
+    description:
+      "Conversational bot system built using modern AI APIs and a sleek interface.",
+    tech: ["Next.js", "Tailwind", "AI API"],
+    link: "#"
+  },
+  {
+    title: "Portfolio Website",
+    description:
+      "High-tech personal website with smooth scroll, motion effects and modern UI.",
+    tech: ["Next.js", "Framer Motion", "Tailwind"],
+    link: "#"
+  },
+  {
+    title: "E-Commerce System",
+    description:
+      "Local marketplace web app for small businesses with order system.",
+    tech: ["HTML", "CSS", "JS", "Python"],
+    link: "#"
   }
+];
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        type: 'spring' as const,
-        stiffness: 100,
-      },
-    },
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 }
   }
+};
 
+const cardVariant = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+export default function Projects() {
   return (
-    <section id="projects" ref={ref} className="py-20 md:py-32 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-24 px-6 relative">
+      {/* subtle gradient glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-indigo-500/10 to-transparent blur-2xl pointer-events-none" />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-6xl mx-auto"
+      >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 gradient-text"
+          variants={cardVariant}
+          className="text-4xl md:text-5xl font-bold text-center text-white mb-14"
         >
           Featured Projects
         </motion.h2>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="grid md:grid-cols-2 gap-10"
-        >
+        <div className="grid md:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
+              variants={cardVariant}
               whileHover={{
-                y: -10,
-                rotateX: 5,
+                scale: 1.05,
+                rotateX: 4,
+                rotateY: 4,
+                boxShadow:
+                  "0 10px 40px rgba(140, 90, 255, 0.25), 0 8px 20px rgba(0,0,0,0.3)"
               }}
-              style={{
-                perspective: '1000px',
-              }}
-              className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
+              transition={{ duration: 0.35 }}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl hover:border-purple-400/50 hover:bg-white/10"
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: 'spring' as const, stiffness: 300 }}
-              >
-                <h3 className="text-2xl font-semibold mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {project.title}
+              </h3>
+              <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                {project.description}
+              </p>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={inView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: i * 0.1 }}
-                      className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-sm font-medium"
-                    >
-                      {tag}
-                    </motion.span>
-                  ))}
-                </div>
-
-                <motion.a
-                  href="#"
-                  className="inline-flex items-center text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
-                  whileHover={{ x: 5 }}
-                >
-                  View Details
-                  <motion.span
-                    className="ml-2"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tech.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-[2px] text-xs rounded-md bg-purple-500/20 text-purple-300 border border-purple-400/30"
                   >
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.span>
-                </motion.a>
-              </motion.div>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={project.link}
+                className="text-purple-300 font-medium hover:underline text-sm"
+              >
+                View Project →
+              </a>
             </motion.div>
           ))}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
-  )
+  );
 }
