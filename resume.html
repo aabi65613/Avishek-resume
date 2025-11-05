@@ -396,11 +396,25 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <!-- ✨ 3-D Neon Pop-Up Animation for Contact Info -->
+    <!-- ✅ link arc rotation -->
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  window.updateDialRotation=(angle)=>{
+    const r=angle*0.8;
+    document.getElementById("holoDial").style.transform=`translateY(-50%) rotate(${r}deg)`;
+  };
+});
+</script>
+
+<!-- ✨ Smooth 3D Neon Scroll Animation for About Info -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const glowColor = "#8b5cf6";
-  const lightColor = "#e4d9ff";
-  const shadowColor = "rgba(40,0,80,0.9)";
+  const glowSoft = "rgba(139,92,246,0.4)";
+  const lightColor = "#e6deff";
+  const shadowColor = "rgba(20,0,40,0.9)";
+
+  gsap.registerPlugin(ScrollTrigger);
 
   gsap.utils.toArray("#about li").forEach((item, i) => {
     item.style.color = lightColor;
@@ -408,20 +422,64 @@ document.addEventListener("DOMContentLoaded", () => {
     item.style.textShadow = `
       1px 1px 1px ${shadowColor},
       2px 2px 2px ${shadowColor},
-      0 0 5px ${glowColor},
-      0 0 10px ${glowColor},
-      0 0 20px ${glowColor}
+      0 0 8px ${glowColor},
+      0 0 15px ${glowSoft}
     `;
-    item.style.transition = "all 0.4s ease";
+    item.style.transition = "all 0.3s ease";
 
-    gsap.fromTo(
-      item,
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: item,
+        start: "top 90%",
+        end: "top 60%",
+        scrub: true,
+      }
+    });
+
+    tl.fromTo(item,
       {
         opacity: 0,
-        y: 40,
+        y: 50,
         scale: 0.9,
-        filter: "brightness(0.6) blur(1px)",
+        filter: "brightness(0.4) blur(3px)",
+        textShadow: `0 0 0px ${glowSoft}`,
       },
       {
         opacity: 1,
         y: 0,
+        scale: 1.05,
+        duration: 1.2,
+        ease: "power2.out",
+        filter: "brightness(1.3)",
+        textShadow: `
+          0 0 6px ${glowColor},
+          0 0 15px ${glowColor},
+          0 0 30px ${glowSoft}
+        `,
+        delay: i * 0.1,
+      }
+    );
+
+    gsap.to(item, {
+      scrollTrigger: {
+        trigger: item,
+        start: "top 50%",
+        end: "top 10%",
+        scrub: true,
+      },
+      opacity: 0.85,
+      scale: 1,
+      filter: "brightness(1)",
+      textShadow: `
+        1px 1px 1px ${shadowColor},
+        0 0 6px ${glowSoft}
+      `,
+      duration: 1.5,
+      ease: "sine.inOut",
+    });
+  });
+});
+</script>
+
+</body>
+</html>
