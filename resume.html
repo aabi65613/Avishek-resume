@@ -15,16 +15,29 @@
     <style>
 
         /* ✅ Hologram arc behind stick (clean tech arc) */
-        .holo-wrap{
-            position:fixed;
-            right:-140px;
-            top:50%;
-            transform:translateY(-50%);
-            width:300px;
-            height:300px;
-            overflow:hidden;
-            pointer-events:none;
-            z-index:0;
+        /* ✅ smaller, black hologram */
+.holo-wrap{
+    position:fixed;
+    right:-100px; /* pull closer to pointer */
+    top:50%;
+    transform:translateY(-50%);
+    width:220px; /* reduced size */
+    height:220px;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+.holo-ring{
+    border:2px solid rgba(0,0,0,0.6); /* black arc */
+    box-shadow:0 0 8px rgba(0,0,0,0.4), inset 0 0 6px rgba(0,0,0,0.3);
+    opacity:0.55;
+}
+.holo-ticks::before{
+    background:repeating-conic-gradient(
+        rgba(0,0,0,.6) 0deg 1deg, /* ticks black */
+        transparent 1deg 8deg
+    );
+        }
         }
         .holo-ring{
             position:absolute;
